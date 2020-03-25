@@ -30,7 +30,7 @@ func init() {
 		InfluxService = &InfluxServiceImpl{}
 		var err error
 		InfluxdbClient, err = client.NewHTTPClient(client.HTTPConfig{
-			Addr:     "localhost:8086",
+			Addr:     "http://localhost:8086",
 			Username: "admin",
 			Password: "admin",
 		})
