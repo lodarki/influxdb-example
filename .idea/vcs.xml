@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="VcsDirectoryMappings">
+    <mapping directory="$PROJECT_DIR$/src/github.com/360EntSecGroup-Skylar/excelize" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/src/github.com/astaxie/beego" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/src/github.com/beego/bee" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/src/github.com/google/go-cmp" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/src/github.com/influxdata/influxdb1-client" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/src/github.com/mitchellh/mapstructure" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/src/github.com/mohae/deepcopy" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/src/github.com/shiena/ansicolor" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/src/golang.org/x/net" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/src/golang.org/x/text" vcs="Git" />
+  </component>
+</project>
