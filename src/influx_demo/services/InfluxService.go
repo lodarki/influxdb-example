@@ -2,6 +2,7 @@ package services
 
 import (
 	"common/utils"
+	"errors"
 	client "github.com/influxdata/influxdb1-client/v2"
 	"log"
 	"sync"
@@ -14,6 +15,7 @@ const (
 
 type IInfluxService interface {
 	Write(dbName, tableName string, obj interface{}, t time.Time, tagsMap map[string]string) error
+	Query(queryStr string, dbName string) (res *client.Response, err error)
 }
 
 type InfluxServiceImpl struct {
@@ -49,7 +51,7 @@ func (impl *InfluxServiceImpl) Write(dbName, tableName string, obj interface{}, 
 	}
 
 	bp, err := client.NewBatchPoints(client.BatchPointsConfig{
-		Precision: "m",
+		Precision: "s",
 		Database:  dbName,
 	})
 
@@ -64,4 +66,32 @@ func (impl *InfluxServiceImpl) Write(dbName, tableName string, obj interface{}, 
 
 	bp.AddPoint(pt)
 	return InfluxdbClient.Write(bp)
+}
+
+func (impl *InfluxServiceImpl) Query(queryStr string, dbName string) (res *client.Response, err error) {
+	query := client.NewQuery(queryStr, dbName, "s")
+	return InfluxdbClient.Query(query)
+}
+
+func ConvertInfluxDbResponse(res *client.Response) (resultList []map[string]interface{}, err error) {
+
+	if res.Err != "" {
+		err = errors.New(res.Err)
+		return
+	}
+
+	resultList = make([]map[string]interface{}, 0)
+	for _, re := range res.Results {
+		for _, ser := range re.Series {
+			for _, v := range ser.Values {
+				m := make(map[string]interface{})
+				for i, subv := range v {
+					m[ser.Columns[i]] = subv
+				}
+				resultList = append(resultList, m)
+			}
+		}
+	}
+
+	return
 }

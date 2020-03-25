@@ -42,3 +42,28 @@ func (c *InfluxDbController) Write() {
 
 	c.Success(nil)
 }
+
+// @Title Query
+// @Description 从influx中读取内容
+// @Param query_str query string true 查询语句
+// @Param db_name query string true 数据库名称
+func (c *InfluxDbController) Query() {
+
+	dbName := c.GetString("db_name")
+	queryStr := c.GetString("query_str")
+
+	res, err := services.InfluxService.Query(queryStr, dbName)
+	if err != nil {
+		c.ServerError(err.Error())
+		return
+	}
+
+	resList, err := services.ConvertInfluxDbResponse(res)
+	if err != nil {
+		c.ServerError(err.Error())
+		return
+	}
+
+	c.Success(resList)
+	return
+}

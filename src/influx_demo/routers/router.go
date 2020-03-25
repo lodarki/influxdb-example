@@ -11,6 +11,7 @@ func init() {
 	)
 	nsInflux := beego.NewNamespace("/influx_db",
 		beego.NSRouter("/write", &controllers.InfluxDbController{}, "post:Write"),
+		beego.NSRouter("/query", &controllers.InfluxDbController{}, "get:Query"),
 	)
 
 	beego.AddNamespace(nsHome)
